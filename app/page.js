@@ -62,9 +62,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Imagem principal */}
-            <div className="mt-10">
-          <Image
+            {/* Imagem principal + card de progresso sobreposto */}
+            <div className="relative mt-10">
+              <Image
                 src="/frutificar_banner_top.png"
                 alt="Campanha IBBN - Frutificar"
                 width={1600}
@@ -72,31 +72,43 @@ export default function Home() {
                 className="w-full rounded-3xl object-cover"
                 priority
               />
+
+              {/* Card de progresso sobreposto */}
+              <div className="absolute inset-x-0 -bottom-8 md:-bottom-10 flex justify-center z-10">
+                <div
+                  className="bg-white rounded-[20px] border border-neutral-200 px-6 py-4 md:px-8 md:py-5 w-[min(920px,90%)]"
+                  role="region"
+                  aria-label="Progresso da campanha"
+                >
+                  {/* PROGRESS_CARD_START */}
+                  {(() => {
+                    const goal = 50000;      // meta (R$)
+                    const raised = 18750;    // arrecadado (R$)
+                    const pct = Math.min(100, Math.round((raised / goal) * 100));
+                    return (
+                      <>
+                        <div className="flex items-center justify-between gap-4">
+                          <div>
+                            <p className="text-sm text-neutral-500">Progresso da Campanha</p>
+                            <p className="text-base font-semibold text-neutral-900">
+                              R$ {raised.toLocaleString('pt-BR')} de R$ {goal.toLocaleString('pt-BR')} ({pct}%)
+                            </p>
+                          </div>
+                          <span className="hidden sm:inline text-sm font-medium text-neutral-700">Contribua você também</span>
+                        </div>
+                        <div className="mt-3 h-3 bg-neutral-100 rounded-full overflow-hidden" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progresso da campanha">
+                          <div className="h-full bg-[#E76F51]" style={{ width: `${pct}%` }}></div>
+                        </div>
+                      </>
+                    );
+                  })()}
+                  {/* PROGRESS_CARD_END */}
+                </div>
+              </div>
             </div>
 
-            {/* Bloco de Progresso (substitui o filtro) */}
-            {/* Valores de exemplo; deixe fácil de editar */}
-            {(() => {
-              const goal = 50000;      // meta (R$)
-              const raised = 18750;    // arrecadado (R$)
-              const pct = Math.min(100, Math.round((raised / goal) * 100));
-              return (
-                <div className="mx-auto -mt-8 md:-mt-12 w-full max-w-4xl bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-neutral-200">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-sm text-neutral-500">Progresso da Campanha</p>
-                      <p className="text-base font-semibold text-neutral-900">
-                        R$ {raised.toLocaleString('pt-BR')} de R$ {goal.toLocaleString('pt-BR')} ({pct}%)
-                      </p>
-                    </div>
-                    <span className="hidden sm:inline text-sm font-medium text-neutral-700">Contribua você também</span>
-                  </div>
-                  <div className="mt-3 h-3 bg-neutral-100 rounded-full overflow-hidden" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progresso da campanha">
-                    <div className="h-full bg-[#E76F51]" style={{ width: `${pct}%` }}></div>
-                  </div>
-                </div>
-              );
-            })()}
+            {/* Spacer para compensar a sobreposição do card */}
+            <div className="h-14 md:h-16" />
           </div>
         </section>
 
